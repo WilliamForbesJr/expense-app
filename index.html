@@ -4,6 +4,20 @@
     <body>
         <h1>Expense App</h1>
         <div>
+            <h2>Income</h2>
+            <div>
+                <input id="income-input" placeholder="Description">
+                <input id="income-amount-input" type="number" placeholder="Add Income">
+                <button id="income-submit">Add Income</button>
+            </div>
+            <div>
+                <ul id="income-list">
+                </ul>
+                <h2 id="total-income"></h2>
+            </div>
+        </div>
+
+        <div>
             <h2>Expenses</h2>
             <div>
                 <input id="expense-input" placeholder="Add Expense">
@@ -16,9 +30,10 @@
                 <h2 id="total-expenses"></h2>
             </div>
         </div>
-    </body>
 
-    <script src=functions.js></script>
+    </body>
+    <script src="income-functions.js"></script>
+    <script src="expense-functions.js"></script>
     <script src="app.js"></script>
-    
+
 </html>

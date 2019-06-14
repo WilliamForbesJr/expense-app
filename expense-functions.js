@@ -25,6 +25,7 @@ const generateExpenseDOM = () => {
             expenses.splice(index, index+1)
             updateLocalStorage()
             generateExpenseDOM()
+            calculateTotalExpenses()
         })
         
         expenseItem.textContent = `Item:  ${expense.description} Cost:  ${expense.cost}`
@@ -57,7 +58,6 @@ const calculateTotalExpenses = () => {
     expenses.forEach(function (expense, index){
         total += parseInt(expense.cost)
     })
-
     //Display Total Expenses
     const expenseTotal = document.querySelector('#total-expenses')
     expenseTotal.textContent = `Total Expenses $${total}`
