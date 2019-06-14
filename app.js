@@ -12,18 +12,19 @@ const income = getIncome()
 //load DOM elements
 generateExpenseDOM()
 generateIncomeDOM()
-calculateTotalExpenses()
-calculateTotalIncome()
 
 
-//listen for submit
+//Income Submit Event Listener
+document.querySelector('#income-submit').addEventListener('click', () => {
+    updateIncome()
+    generateIncomeDOM()
+})
+
+//Expense Submit Event Listener
 document.querySelector('#expense-submit').addEventListener('click', () => {
     updateExpenses()
     generateExpenseDOM()
 })
 
-document.querySelector('#income-submit').addEventListener('click', () => {
-    updateIncome()
-    generateIncomeDOM()
-})
+
 

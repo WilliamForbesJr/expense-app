@@ -25,12 +25,12 @@ const generateExpenseDOM = () => {
             expenses.splice(index, index+1)
             updateLocalStorage()
             generateExpenseDOM()
-            calculateTotalExpenses()
         })
         
         expenseItem.textContent = `Item:  ${expense.description} Cost:  ${expense.cost}`
         expenseItem.appendChild(removeExpense)
         expenseList.appendChild(expenseItem)
+        calculateTotalExpenses()
     })
 }
 

@@ -9,13 +9,13 @@ const getIncome = () => {
 }
 
 
-//create DOM elements for expenses
+//create DOM elements for Income
 const generateIncomeDOM = () => {
     incomeList.textContent = ''
     income.forEach(function (item, index) {
         const incomeItem = document.createElement('li')
 
-        // Create Button to Remove Expense
+        // Create Button to Remove Income
         const removeIncomeButton = document.createElement('button')
         removeIncomeButton.setAttribute('class', 'delete-income')
         removeIncomeButton.textContent = 'X'
@@ -25,12 +25,12 @@ const generateIncomeDOM = () => {
             income.splice(index, index + 1)
             updateIncomeLocalStorage()
             generateIncomeDOM()
-            calculateTotalIncome()
         })
 
         incomeItem.textContent = `Item:  ${item.description} Cost:  ${item.amount}`
         incomeItem.appendChild(removeIncomeButton)
         incomeList.appendChild(incomeItem)
+        calculateTotalIncome()
     })
 }
 
