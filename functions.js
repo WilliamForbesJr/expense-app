@@ -8,15 +8,25 @@ const getExpenses = () => {
     }
 }
 
+
 //create DOM elements for expenses
 const generateExpenseDOM = () => {
     expenseList.textContent = ''
     expenses.forEach(function (expense, index) {
         const expenseItem = document.createElement('li')
+
+        // Create Button to Remove Expense
+        const removeExpense = document.createElement('button')
+        removeExpense.setAttribute('class', 'delete-expense')
+        removeExpense.textContent = 'X'
+        
         expenseItem.textContent = expense.description
+        expenseItem.appendChild(removeExpense)
+
         expenseList.appendChild(expenseItem)
     })
 }
+
 
 // Update expenses 
 const updateExpenses = () => {
@@ -25,11 +35,9 @@ const updateExpenses = () => {
         cost: expenseCostInput.value
     }
     expenses.push(newExpense)
-
     //clear inputs
     expenseInput.value = ''
     expenseCostInput.value = ''
-
     //update localStorage
     localStorage.setItem('expenses', JSON.stringify(expenses))
 }
