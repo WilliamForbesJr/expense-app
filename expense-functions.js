@@ -14,10 +14,11 @@ const generateExpenseDOM = () => {
     expenseList.textContent = ''
     expenses.forEach(function (expense, index) {
         const expenseItem = document.createElement('li')
+        expenseItem.setAttribute('class', 'list-group-item')
 
         // Create Button to Remove Expense
         const removeExpense = document.createElement('button')
-        removeExpense.setAttribute('class', 'delete-expense')
+        removeExpense.setAttribute('class', 'delete-expense btn btn-danger btn-sm')
         removeExpense.textContent = 'X'
 
         //delete logic for button

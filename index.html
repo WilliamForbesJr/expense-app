@@ -1,39 +1,64 @@
 <!DOCTYPE html>
 <html>
-    <head></head>
+    <head>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
     <body>
-        <h1>Expense App</h1>
-        <div>
-            <h2>Income</h2>
-            <div>
-                <input id="income-input" placeholder="Description">
-                <input id="income-amount-input" type="number" placeholder="Add Income">
-                <button id="income-submit">Add Income</button>
+        <div class="container">
+            <div class="jumbotron">
+                <h1 class="display-1">Expense App</h1>
             </div>
-            <div>
-                <ul id="income-list">
-                </ul>
-                <h2 id="total-income"></h2>
+            <div class="container">
+                <h2 class="display-3">Income</h2>
+                <div class="row">
+                    <div class="col">
+                    <form>
+                        <input id="income-input" class="form-control" placeholder="Description">
+                    </div>
+                    <div class="col">
+                        <input id="income-amount-input" class="form-control" type="number" placeholder="Add Income">
+                    </div>
+                    <div class="col">
+                        <button id="income-submit" class="btn btn-success btn-block">Add Income</button>
+                    </div>
+                    </form>
+                </div>
+                <div>
+                    <ul id="income-list" class="list-group">
+                    </ul>
+                    <h2 id="total-income"></h2>
+                </div>
+            </div>
+            
+            <div class="container">
+                <h2 class="display-3">Expenses</h2>
+                <div class="row">
+                    <div class="col">
+                        <input id="expense-input" class="form-control" placeholder="Add Expense">
+                    </div>
+                    <div class="col">
+                        <input id="expense-cost-input" class="form-control" type="number" placeholder="Add Cost">
+                    </div>
+                    <div class="col">
+                        <button id="expense-submit" class="btn btn-primary btn-block">Add Expense</button>
+                    </div>
+                    
+                </div>
+                <div>
+                    <ul id="expense-list" class="list-group">
+                    </ul>
+                    <h2 id="total-expenses"></h2>
+                </div>
             </div>
         </div>
-
-        <div>
-            <h2>Expenses</h2>
-            <div>
-                <input id="expense-input" placeholder="Add Expense">
-                <input id="expense-cost-input" type="number" placeholder="Add Cost">
-                <button id="expense-submit">Add Expense</button>
-            </div>
-            <div>
-                <ul id="expense-list">
-                </ul>
-                <h2 id="total-expenses"></h2>
-            </div>
-        </div>
-
     </body>
+
     <script src="income-functions.js"></script>
     <script src="expense-functions.js"></script>
     <script src="app.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
 </html>

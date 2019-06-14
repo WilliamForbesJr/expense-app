@@ -14,10 +14,11 @@ const generateIncomeDOM = () => {
     incomeList.textContent = ''
     income.forEach(function (item, index) {
         const incomeItem = document.createElement('li')
+        incomeItem.setAttribute('class', 'list-group-item')
 
         // Create Button to Remove Income
         const removeIncomeButton = document.createElement('button')
-        removeIncomeButton.setAttribute('class', 'delete-income')
+        removeIncomeButton.setAttribute('class', 'delete-income btn btn-danger btn-sm')
         removeIncomeButton.textContent = 'X'
 
         //delete logic for button
