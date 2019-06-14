@@ -15,5 +15,3 @@ document.querySelector('#expense-submit').addEventListener('click', () => {
 })
 
 
-
-//need to refactor submit button to create new expense object with expense and cost properties (constructor function?)

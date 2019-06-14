@@ -14,13 +14,19 @@ const generateExpenseDOM = () => {
     expenseList.textContent = ''
     expenses.forEach(function (expense, index) {
         const expenseItem = document.createElement('li')
+        const removeExpense = document.createElement('button')
 
         // Create Button to Remove Expense
-        const removeExpense = document.createElement('button')
         removeExpense.setAttribute('class', 'delete-expense')
         removeExpense.textContent = 'X'
+        //delete logic for button
+        removeExpense.addEventListener('click', () => {
+            expenses.splice(index, index+1)
+            updateLocalStorage()
+            generateExpenseDOM()
+        })
         
-        expenseItem.textContent = expense.description
+        expenseItem.textContent = `Item:  ${expense.description} Cost:  ${expense.cost}`
         expenseItem.appendChild(removeExpense)
 
         expenseList.appendChild(expenseItem)
@@ -38,6 +44,10 @@ const updateExpenses = () => {
     //clear inputs
     expenseInput.value = ''
     expenseCostInput.value = ''
-    //update localStorage
-    localStorage.setItem('expenses', JSON.stringify(expenses))
+    updateLocalStorage()
 }
+
+//update localStorage
+const updateLocalStorage = () => {
+    localStorage.setItem('expenses', JSON.stringify(expenses))
+}     
