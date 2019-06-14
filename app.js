@@ -6,6 +6,7 @@ const expenses = getExpenses()
 
 //load DOM elements
 generateExpenseDOM()
+console.log(calculateTotalExpenses())
 
 
 //listen for submit

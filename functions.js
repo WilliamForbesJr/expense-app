@@ -14,11 +14,12 @@ const generateExpenseDOM = () => {
     expenseList.textContent = ''
     expenses.forEach(function (expense, index) {
         const expenseItem = document.createElement('li')
-        const removeExpense = document.createElement('button')
 
         // Create Button to Remove Expense
+        const removeExpense = document.createElement('button')
         removeExpense.setAttribute('class', 'delete-expense')
         removeExpense.textContent = 'X'
+
         //delete logic for button
         removeExpense.addEventListener('click', () => {
             expenses.splice(index, index+1)
@@ -28,7 +29,6 @@ const generateExpenseDOM = () => {
         
         expenseItem.textContent = `Item:  ${expense.description} Cost:  ${expense.cost}`
         expenseItem.appendChild(removeExpense)
-
         expenseList.appendChild(expenseItem)
     })
 }
@@ -51,3 +51,15 @@ const updateExpenses = () => {
 const updateLocalStorage = () => {
     localStorage.setItem('expenses', JSON.stringify(expenses))
 }     
+
+const calculateTotalExpenses = () => {
+    let total = 0
+    expenses.forEach(function (expense, index){
+        total += parseInt(expense.cost)
+    })
+
+    //Display Total Expenses
+    const expenseTotal = document.querySelector('#total-expenses')
+    expenseTotal.textContent = `Total Expenses $${total}`
+}
+
