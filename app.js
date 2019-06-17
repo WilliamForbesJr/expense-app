@@ -6,24 +6,20 @@ const incomeDescription = document.querySelector('#income-input')
 const incomeAmountInput = document.querySelector('#income-amount-input')
 const incomeList = document.querySelector("#income-list")
 
-const expenses = getExpenses()
-const income = getIncome()
-
-//load DOM elements
-generateExpenseDOM()
-generateIncomeDOM()
+const data = getData()
+generateDOM()
 
 
 //Income Submit Event Listener
 document.querySelector('#income-submit').addEventListener('click', () => {
-    updateIncome()
-    generateIncomeDOM()
+    updateData('income', incomeDescription.value, incomeAmountInput.value)
+    generateDOM()
 })
 
 //Expense Submit Event Listener
 document.querySelector('#expense-submit').addEventListener('click', () => {
-    updateExpenses()
-    generateExpenseDOM()
+    updateData('expense', expenseInput.value, expenseCostInput.value)
+    generateDOM()
 })
 
 
