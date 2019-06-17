@@ -15,6 +15,7 @@ const updateLocalStorage = () => {
 
 const generateDOM = () => {
     clearDOM()
+    calculateTotals()
     data.forEach(function(item, index){
         //define and setup each element
         const expenseItem = document.createElement('li')
@@ -66,4 +67,23 @@ const clearDOM = () => {
     incomeAmountInput.value = ''
     incomeInput.value = ''
     incomeList.textContent = ''
+}
+
+
+const calculateTotals = () => {
+    let totalExpenses = 0
+    let totalIncome = 0
+    //iterate through data array and add each object type
+    data.forEach(function (item, index) {
+        if (item.type === 'income') {
+            totalIncome += parseInt(item.amount)
+        } else if (item.type === 'expense'){
+            totalExpenses += parseInt(item.amount)
+        }
+    })
+    //Display Total Expenses
+    const expenseTotal = document.querySelector('#total-expenses')
+    expenseTotal.textContent = `Total Expenses $${totalExpenses}`
+    const incomeTotal = document.querySelector('#total-income')
+    incomeTotal.textContent = `Total Expenses $${totalIncome}`
 }
