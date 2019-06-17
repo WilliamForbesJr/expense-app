@@ -60,10 +60,10 @@ const updateData = (type, description, amount) => {
 const clearDOM = () => {
     //clear expense fields
     expenseInput.value = ''
-    expenseCostInput.value = ''
+    expenseAmountInput.value = ''
     expenseList.textContent = ''
     // clear income fields
     incomeAmountInput.value = ''
-    incomeDescription.value = ''
+    incomeInput.value = ''
     incomeList.textContent = ''
 }
