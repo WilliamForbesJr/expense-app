@@ -15,6 +15,7 @@ const updateLocalStorage = () => {
 
 const generateDOM = () => {
     clearDOM()
+    generateExpenseCategories(data)
     calculateTotals()
     data.forEach(function(item, index){
         //define and setup each element
@@ -35,7 +36,7 @@ const generateDOM = () => {
         }) 
         //Sort data objects in DOM
         if (item.type === 'expense'){
-            expenseItem.textContent = `Item:  ${item.description} Cost:  ${item.amount}`
+            expenseItem.textContent = `Item:  ${item.description} Cost:  ${item.amount} Category ${item.category}`
             expenseItem.appendChild(removeButton)
             expenseList.appendChild(expenseItem)
         } else if (item.type === 'income'){
@@ -47,12 +48,13 @@ const generateDOM = () => {
 }
 
 //create array containing income and expense objects
-const updateData = (type, description, amount) => {
+const updateData = (type, description, amount, category) => {
     const newItem = {
         type: type,
         description: description,
-        amount: amount
+        amount: amount,
     }
+    newItem.category = category
     data.push(newItem)
     updateLocalStorage()
     clearDOM()
@@ -63,12 +65,15 @@ const clearDOM = () => {
     expenseInput.value = ''
     expenseAmountInput.value = ''
     expenseList.textContent = ''
+
+    //category list with placeholder element
+    expenseCategoryList.textContent = ''
+    expenseCategoryInput.value = ''
     // clear income fields
     incomeAmountInput.value = ''
     incomeInput.value = ''
     incomeList.textContent = ''
 }
-
 
 const calculateTotals = () => {
     let totalExpenses = 0
@@ -81,9 +86,31 @@ const calculateTotals = () => {
             totalExpenses += parseInt(item.amount)
         }
     })
-    //Display Total Expenses
+    //Display Total Expense and Income
     const expenseTotal = document.querySelector('#total-expenses')
     expenseTotal.textContent = `Total Expenses $${totalExpenses}`
     const incomeTotal = document.querySelector('#total-income')
-    incomeTotal.textContent = `Total Expenses $${totalIncome}`
+    incomeTotal.textContent = `Total Income $${totalIncome}`
+    //Calculate Net Income
+    const netIncome = document.querySelector('#net-income')
+    netIncome.textContent = `Net Income: $${totalIncome - totalExpenses}`
+}
+
+const generateExpenseCategories = (data) => {
+    //create array for only categories
+    const categories = data.map(function (item) {
+        return item.category;
+    });
+    //check for duplicates
+    const filteredCategories = categories.filter(function (item, index) {
+        return categories.indexOf(item) >= index
+    });
+    //generate DOM element for expenses
+    filteredCategories.forEach(function(item, index) {
+        if (item !== undefined) {
+            const category = document.createElement('option')
+            category.value = item
+            expenseCategoryList.appendChild(category)
+        }
+    })
 }
