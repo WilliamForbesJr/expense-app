@@ -14,8 +14,8 @@ const updateLocalStorage = () => {
 }     
 
 const generateDOM = () => {
-    generateExpenseCategories(data)
     clearDOM()
+    generateExpenseCategories(data)
     calculateTotals()
     loadIncomeDOM()
     loadExpenseDOM()
@@ -41,7 +41,7 @@ const clearDOM = () => {
     expenseList.textContent = ''
 
     //category list with placeholder element
-    expenseCategoryList.textContent = ''
+    expenseOptions.textContent = ''
     expenseCategoryInput.value = ''
     // clear income fields
     incomeAmountInput.value = ''
@@ -86,9 +86,9 @@ const generateExpenseCategories = (data) => {
     //generate DOM element for expenses
     filteredCategories.forEach(function(item, index) {
         if (item !== undefined) {
-            const category = document.createElement('option')
-            category.value = item
-            expenseCategoryList.appendChild(category)
+            const option = document.createElement('option')
+            option.value = item
+            expenseOptions.append(option)
             categoryArray.push(item)
         }
     })
@@ -105,7 +105,7 @@ const loadExpenseDOM = () => {
         //setup each category and expense element
         const categoryList = document.createElement('ul')
         categoryList.setAttribute('class', 'h5')
-        categoryList.textContent = item
+        categoryList.textContent = item.toUpperCase()
         
         //iterate through each separate category list add expense elements
         list.forEach(function (item, index) {
