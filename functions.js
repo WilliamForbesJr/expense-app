@@ -67,7 +67,6 @@ const calculateTotals = () => {
     incomeTotal.textContent = `Total Income $${totalIncome}`
     //Calculate Net Income
     const netIncome = document.querySelector('#net-income')
-    
     netIncome.textContent = `Net Income: $${totalIncome - totalExpenses}`
 }
 
@@ -112,10 +111,10 @@ const loadExpenseDOM = () => {
             const expenseItem = document.createElement('li')
             expenseItem.setAttribute('class', 'list-group-item')
             expenseItem.textContent = `Item:  ${item.description} Cost:  ${item.amount} Category ${item.category}`
+            expenseItem.appendChild(createDeleteButton(index))
 
             expenseList.appendChild(categoryList)
             categoryList.appendChild(expenseItem)
-            
         })
     })
 }
@@ -127,9 +126,24 @@ const loadIncomeDOM = () => {
         //Sort data objects in DOM
         if (item.type === 'income') {
             incomeItem.textContent = `Item:  ${item.description} Cost:  ${item.amount}`
+            incomeItem.appendChild(createDeleteButton(index))
             incomeList.appendChild(incomeItem)
         }
     })
 }
 
+
+const createDeleteButton = (index) => {
+    const deleteButton = document.createElement('button')
+    deleteButton.setAttribute('class', 'delete-expense btn btn-danger btn-sm')
+    deleteButton.textContent = 'X'
+    
+    // delete logic for button
+    deleteButton.addEventListener('click', () => {
+        data.splice(index, index + 1)
+        updateLocalStorage()
+        generateDOM()
+    })
+    return deleteButton
+}
 
