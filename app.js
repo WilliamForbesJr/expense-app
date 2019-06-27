@@ -24,4 +24,3 @@ document.querySelector('#expense-submit').addEventListener('click', () => {
     updateData('expense', expenseInput.value, parseInt(expenseAmountInput.value), expenseCategoryInput.value.toLowerCase())
     generateDOM()
 })
-

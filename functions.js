@@ -107,7 +107,8 @@ const loadExpenseDOM = () => {
         const list = data.filter((data) => data.category !== undefined && data.category.indexOf(item) >= 0 && data.category.length === item.length)
 
         //setup each category and expense element
-        const categoryList = document.createElement('ul')
+        const categoryList = document.createElement('div')
+        categoryList.setAttribute('class', 'card mt-3')
 
         //calculate total amounts for each category of expenses
         let categoryTotal = () => {
@@ -118,12 +119,12 @@ const loadExpenseDOM = () => {
             return categoryTotal
         }
         
-        categoryList.innerHTML = `<h4>${item.toUpperCase()} Total: $${categoryTotal()} </h4>`
+        categoryList.innerHTML = `<h5 class="card-header expense-header">${item.toUpperCase()} Total: $${categoryTotal()} </h5>`
         
         //iterate through each separate category list add expense elements
         list.forEach(function (item, index) {
             const expenseItem = document.createElement('li')
-            expenseItem.setAttribute('class', 'list-group-item')
+            expenseItem.setAttribute('class', 'list-group-item list-group-flush')
             expenseItem.textContent = `Item:  ${item.description} Cost:  ${item.amount}`
             expenseItem.appendChild(createDeleteButton(index))
             expenseList.appendChild(categoryList)
@@ -148,8 +149,8 @@ const loadIncomeDOM = () => {
 
 const createDeleteButton = (index) => {
     const deleteButton = document.createElement('button')
-    deleteButton.setAttribute('class', 'delete-expense btn btn-danger btn-sm')
-    deleteButton.textContent = 'X'
+    deleteButton.setAttribute('class', 'delete-expense btn btn-danger btn-sm float-right')
+    deleteButton.textContent = 'Delete'
     
     // delete logic for button
     deleteButton.addEventListener('click', () => {
@@ -159,4 +160,3 @@ const createDeleteButton = (index) => {
     })
     return deleteButton
 }
-
