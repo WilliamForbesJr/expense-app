@@ -4,13 +4,15 @@ const expenseList = document.querySelector("#expense-list")
 const expenseCategoryList = document.querySelector('#expense-category-list')
 const expenseCategoryInput = document.querySelector('#expense-category-input')
 
+
 const incomeInput = document.querySelector('#income-input')
 const incomeAmountInput = document.querySelector('#income-amount-input')
 const incomeList = document.querySelector("#income-list")
 
 const data = getData()
-generateDOM()
+const categoryArray = []
 
+generateDOM()
 
 //Income Submit Event Listener
 document.querySelector('#income-submit').addEventListener('click', () => {
@@ -23,6 +25,4 @@ document.querySelector('#expense-submit').addEventListener('click', () => {
     updateData('expense', expenseInput.value, expenseAmountInput.value, expenseCategoryInput.value)
     generateDOM()
 })
-
-
 
