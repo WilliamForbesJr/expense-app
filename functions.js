@@ -104,11 +104,10 @@ const loadExpenseDOM = () => {
     categoryArray.forEach(function (item, index) {
         
         //creates separate object arrays based on category array matching object.category
-        const list = data.filter((data) => data.category !== undefined && data.category.includes(item))
+        const list = data.filter((data) => data.category !== undefined && data.category.indexOf(item) >= 0 && data.category.length === item.length)
 
         //setup each category and expense element
         const categoryList = document.createElement('ul')
-        categoryList.setAttribute('class', 'h5')
 
         //calculate total amounts for each category of expenses
         let categoryTotal = () => {
@@ -119,13 +118,13 @@ const loadExpenseDOM = () => {
             return categoryTotal
         }
         
-        categoryList.textContent = `${item.toUpperCase()} Total: $${categoryTotal()}`
+        categoryList.innerHTML = `<h4>${item.toUpperCase()} Total: $${categoryTotal()} </h4>`
         
         //iterate through each separate category list add expense elements
         list.forEach(function (item, index) {
             const expenseItem = document.createElement('li')
             expenseItem.setAttribute('class', 'list-group-item')
-            expenseItem.textContent = `Item:  ${item.description} Cost:  ${item.amount} Category ${item.category}`
+            expenseItem.textContent = `Item:  ${item.description} Cost:  ${item.amount}`
             expenseItem.appendChild(createDeleteButton(index))
             expenseList.appendChild(categoryList)
             categoryList.appendChild(expenseItem)
