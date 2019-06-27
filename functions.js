@@ -23,11 +23,16 @@ const generateDOM = () => {
 
 //create array containing income and expense objects
 const updateData = (type, description, amount, category) => {
+    //check for empty input
+    if (isNaN(amount)) {
+        amount = 0
+    }
     const newItem = {
         type: type,
         description: description,
         amount: amount,
     }
+
     newItem.category = category
     data.push(newItem)
     updateLocalStorage()
@@ -95,16 +100,26 @@ const generateExpenseCategories = (data) => {
 
 
 const loadExpenseDOM = () => { 
-    
+    //iterate through category array to find objects with matching category property.
     categoryArray.forEach(function (item, index) {
         
-        //creates separate object arrays based on category
+        //creates separate object arrays based on category array matching object.category
         const list = data.filter((data) => data.category !== undefined && data.category.includes(item))
 
         //setup each category and expense element
         const categoryList = document.createElement('ul')
         categoryList.setAttribute('class', 'h5')
-        categoryList.textContent = item.toUpperCase()
+
+        //calculate total amounts for each category of expenses
+        let categoryTotal = () => {
+            let categoryTotal = 0
+            list.forEach(function (item, index){
+                categoryTotal += item.amount
+            })
+            return categoryTotal
+        }
+        
+        categoryList.textContent = `${item.toUpperCase()} Total: $${categoryTotal()}`
         
         //iterate through each separate category list add expense elements
         list.forEach(function (item, index) {
@@ -112,7 +127,6 @@ const loadExpenseDOM = () => {
             expenseItem.setAttribute('class', 'list-group-item')
             expenseItem.textContent = `Item:  ${item.description} Cost:  ${item.amount} Category ${item.category}`
             expenseItem.appendChild(createDeleteButton(index))
-
             expenseList.appendChild(categoryList)
             categoryList.appendChild(expenseItem)
         })
@@ -140,7 +154,7 @@ const createDeleteButton = (index) => {
     
     // delete logic for button
     deleteButton.addEventListener('click', () => {
-        data.splice(index, index + 1)
+        data.splice(index, 1)
         updateLocalStorage()
         generateDOM()
     })
