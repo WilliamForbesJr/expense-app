@@ -122,15 +122,20 @@ const loadExpenseDOM = () => {
         categoryList.innerHTML = 
                 `<div class="card-header expense-header"><h5>
                     ${item.toUpperCase()} </h5>
-                    <span class="text-secondary">Total Spent:</span> <strong>  $${categoryTotal()} </strong>
+                    <span class="text-secondary">Total Spent:</span>  $${categoryTotal()} 
                     <button id="income-submit" class="btn btn-success btn-sm float-right align-middle">Add Income</button>
                 </div>`
         
         //iterate through each separate category list add expense elements
         list.forEach(function (item, index) {
-            const expenseItem = document.createElement('li')
-            expenseItem.setAttribute('class', 'list-group-item list-group-flush item hide')
-            expenseItem.textContent = `Item:  ${item.description} Cost:  ${item.amount}`
+            const expenseItem = document.createElement('li') 
+            expenseItem.setAttribute('class', 'list-group-item hide d-flex justify-content-between')
+            expenseItem.innerHTML = 
+                                    `<div>
+                                        <p class="h6 item-description">${item.description} </p> 
+                                        $${item.amount}
+                                    </div>`
+                                    
             expenseItem.appendChild(createDeleteButton(index))
             expenseList.appendChild(categoryList)
             categoryList.appendChild(expenseItem)
@@ -156,7 +161,7 @@ const loadIncomeDOM = () => {
 
 const createDeleteButton = (index) => {
     const deleteButton = document.createElement('button')
-    deleteButton.setAttribute('class', 'delete-expense btn btn-danger btn-sm float-right')
+    deleteButton.setAttribute('class', 'delete-expense btn btn-danger btn-sm')
     deleteButton.textContent = 'Delete'
     
     // delete logic for button
