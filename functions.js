@@ -129,7 +129,7 @@ const loadExpenseDOM = () => {
         //iterate through each separate category list add expense elements
         list.forEach(function (item, index) {
             const expenseItem = document.createElement('li')
-            expenseItem.setAttribute('class', 'list-group-item list-group-flush item transition')
+            expenseItem.setAttribute('class', 'list-group-item list-group-flush item hide')
             expenseItem.textContent = `Item:  ${item.description} Cost:  ${item.amount}`
             expenseItem.appendChild(createDeleteButton(index))
             expenseList.appendChild(categoryList)
@@ -172,6 +172,6 @@ const toggleListView = (list, item) => {
     list.addEventListener('click', () => {
         item.classList.toggle('hide')
         item.classList.toggle('transition')
-        item.scrollIntoView({behavior: "smooth", block: "center"})
+        item.scrollIntoView({behavior: "smooth", block: "nearest"})
     })
 }
