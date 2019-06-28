@@ -108,7 +108,7 @@ const loadExpenseDOM = () => {
 
         //setup each category and expense element
         const categoryList = document.createElement('div')
-        categoryList.setAttribute('class', 'card mt-3')
+        categoryList.setAttribute('class', 'card my-3 shadow')
 
         //calculate total amounts for each category of expenses
         let categoryTotal = () => {
@@ -119,16 +119,23 @@ const loadExpenseDOM = () => {
             return categoryTotal
         }
         
-        categoryList.innerHTML = `<h5 class="card-header expense-header">${item.toUpperCase()} Total: $${categoryTotal()} </h5>`
+        categoryList.innerHTML = 
+                `<div class="card-header expense-header"><h5>
+                    ${item.toUpperCase()} </h5>
+                    <span class="text-secondary">Total Spent:</span> <strong>  $${categoryTotal()} </strong>
+                    <button id="income-submit" class="btn btn-success btn-sm float-right align-middle">Add Income</button>
+                </div>`
         
         //iterate through each separate category list add expense elements
         list.forEach(function (item, index) {
             const expenseItem = document.createElement('li')
-            expenseItem.setAttribute('class', 'list-group-item list-group-flush')
+            expenseItem.setAttribute('class', 'list-group-item list-group-flush item transition')
             expenseItem.textContent = `Item:  ${item.description} Cost:  ${item.amount}`
             expenseItem.appendChild(createDeleteButton(index))
             expenseList.appendChild(categoryList)
             categoryList.appendChild(expenseItem)
+
+            toggleListView(categoryList, expenseItem)
         })
     })
 }
@@ -159,4 +166,12 @@ const createDeleteButton = (index) => {
         generateDOM()
     })
     return deleteButton
+}
+
+const toggleListView = (list, item) => {
+    list.addEventListener('click', () => {
+        item.classList.toggle('hide')
+        item.classList.toggle('transition')
+        item.scrollIntoView({behavior: "smooth", block: "center"})
+    })
 }
