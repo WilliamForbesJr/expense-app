@@ -120,12 +120,14 @@ const loadExpenseDOM = () => {
         }
         
         categoryList.innerHTML = 
-                `<div class="card-header expense-header"><h5>
-                    ${item.toUpperCase()} </h5>
-                    <span class="text-secondary">Total Spent:</span>  $${categoryTotal()} 
-                    <button id="income-submit" class="btn btn-success btn-sm float-right align-middle">Add Income</button>
+                `<div class="card-header expense-header d-flex justify-content-between">
+                    <div>
+                        <h5>${item.toUpperCase()} </h5>
+                        <span class="text-secondary">Total Spent:</span>  $${categoryTotal()} 
+                    </div>
+                        <button class="category-button btn btn-success btn-sm">Add Expense</button>
                 </div>`
-        
+
         //iterate through each separate category list add expense elements
         list.forEach(function (item, index) {
             const expenseItem = document.createElement('li') 
@@ -140,7 +142,9 @@ const loadExpenseDOM = () => {
             expenseList.appendChild(categoryList)
             categoryList.appendChild(expenseItem)
 
-            toggleListView(categoryList, expenseItem)
+            categoryList.addEventListener('click', (e) => {
+                toggleElementVisability(expenseItem, e)
+            })
         })
     })
 }
@@ -173,10 +177,11 @@ const createDeleteButton = (index) => {
     return deleteButton
 }
 
-const toggleListView = (list, item) => {
-    list.addEventListener('click', () => {
-        item.classList.toggle('hide')
-        item.classList.toggle('transition')
-        item.scrollIntoView({behavior: "smooth", block: "nearest"})
-    })
-}
+//show or hide expense lists when expense category is clicked
+const toggleElementVisability = (eventElement, event) => {
+        eventElement.classList.toggle('hide')
+        eventElement.classList.toggle('transition')
+        eventElement.scrollIntoView({behavior: "smooth", block: "nearest"})
+        event.stopPropagation()
+    }
+

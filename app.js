@@ -3,6 +3,7 @@ const expenseAmountInput = document.querySelector("#expense-cost-input")
 const expenseList = document.querySelector("#expense-list")
 const expenseOptions = document.querySelector('#expense-category-list')
 const expenseCategoryInput = document.querySelector('#expense-category-input')
+const addExpenseContainer = document.querySelector('.add-expense-container')
 
 const incomeInput = document.querySelector('#income-input')
 const incomeAmountInput = document.querySelector('#income-amount-input')
@@ -20,7 +21,14 @@ document.querySelector('#income-submit').addEventListener('click', () => {
 })
 
 //Expense Submit Event Listener
-document.querySelector('#expense-submit').addEventListener('click', () => {
+document.querySelector('#expense-submit').addEventListener('click', (e) => {
     updateData('expense', expenseInput.value, parseInt(expenseAmountInput.value), expenseCategoryInput.value.toLowerCase())
     generateDOM()
+    toggleElementVisability(addExpenseContainer, e)
+})
+
+document.querySelectorAll('.category-button').forEach(function(categoryButton){
+    categoryButton.addEventListener('click', (e) => {
+        toggleElementVisability(addExpenseContainer, e)
+    })
 })
