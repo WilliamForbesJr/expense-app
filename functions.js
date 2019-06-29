@@ -99,7 +99,6 @@ const generateExpenseCategories = (data) => {
     })
 }
 
-
 const loadExpenseDOM = () => { 
     //iterate through category array to find objects with matching category property.
     categoryArray.forEach(function (item, index) {
@@ -121,7 +120,7 @@ const loadExpenseDOM = () => {
         }
         
         categoryList.innerHTML = 
-                `<div class="card-header expense-header d-flex justify-content-between">
+                `<div class="card-header expense-header ${item} d-flex justify-content-between">
                     <div>
                         <h5 id=${item}>${item.toUpperCase()}</h5>
                         <span class="text-secondary">Total Spent:</span>  $${categoryTotal()} 
@@ -143,13 +142,16 @@ const loadExpenseDOM = () => {
             expenseList.appendChild(categoryList)
             categoryList.appendChild(expenseItem)
 
-            categoryList.addEventListener('click', (e) => {
+            // toggle visability of children elements when clicking on expenseHeader
+            const expenseHeader = document.querySelector(`.${item.category}`)
+            expenseHeader.addEventListener('click', (e) => {
                 if (expenseCategoryInput.value !== '' || addExpenseContainer.classList.contains('transition')){
                     toggleElementVisability(addExpenseContainer)
                     expenseCategoryInput.value = ''
                 }
                 toggleElementVisability(expenseItem)
-                expenseItem.scrollIntoView({ behavior: "smooth", block: "nearest" })
+                expenseItem.scrollIntoView({ behavior: "smooth", block: "center" })
+                e.stopPropagation()
             })
         })
     })
@@ -167,7 +169,6 @@ const loadIncomeDOM = () => {
         }
     })
 }
-
 
 const createDeleteButton = (index) => {
     const deleteButton = document.createElement('button')
