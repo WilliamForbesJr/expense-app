@@ -122,7 +122,7 @@ const loadExpenseDOM = () => {
         categoryList.innerHTML = 
                 `<div class="card-header expense-header d-flex justify-content-between">
                     <div>
-                        <h5>${item.toUpperCase()} </h5>
+                        <h5 id=${item}>${item.toUpperCase()} </h5>
                         <span class="text-secondary">Total Spent:</span>  $${categoryTotal()} 
                     </div>
                         <button class="category-button btn btn-success btn-sm">Add Expense</button>
@@ -143,6 +143,10 @@ const loadExpenseDOM = () => {
             categoryList.appendChild(expenseItem)
 
             categoryList.addEventListener('click', (e) => {
+                if (expenseCategoryInput.value !== ''){
+                    toggleElementVisability(addExpenseContainer)
+                    expenseCategoryInput.value = ''
+                }
                 toggleElementVisability(expenseItem, e)
             })
         })
@@ -178,10 +182,9 @@ const createDeleteButton = (index) => {
 }
 
 //show or hide expense lists when expense category is clicked
-const toggleElementVisability = (eventElement, event) => {
+const toggleElementVisability = (eventElement) => {
         eventElement.classList.toggle('hide')
         eventElement.classList.toggle('transition')
         eventElement.scrollIntoView({behavior: "smooth", block: "nearest"})
-        event.stopPropagation()
     }
 

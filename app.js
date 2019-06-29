@@ -29,6 +29,12 @@ document.querySelector('#expense-submit').addEventListener('click', (e) => {
 
 document.querySelectorAll('.category-button').forEach(function(categoryButton){
     categoryButton.addEventListener('click', (e) => {
-        toggleElementVisability(addExpenseContainer, e)
+        if (expenseCategoryInput.value === '' && addExpenseContainer.classList.contains('hide')) {
+            toggleElementVisability(addExpenseContainer)
+        }
+        expenseInput.focus()
+        expenseCategoryInput.value = categoryButton.parentNode.querySelector('h5').textContent.toLowerCase()
+        console.log(e.target)
+        e.stopPropagation()
     })
 })
