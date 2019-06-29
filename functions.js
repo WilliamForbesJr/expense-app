@@ -19,6 +19,7 @@ const generateDOM = () => {
     calculateTotals()
     loadIncomeDOM()
     loadExpenseDOM()
+    activeExpenseButtonListeners()
 }
 
 //create array containing income and expense objects
@@ -122,7 +123,7 @@ const loadExpenseDOM = () => {
         categoryList.innerHTML = 
                 `<div class="card-header expense-header d-flex justify-content-between">
                     <div>
-                        <h5 id=${item}>${item.toUpperCase()} </h5>
+                        <h5 id=${item}>${item.toUpperCase()}</h5>
                         <span class="text-secondary">Total Spent:</span>  $${categoryTotal()} 
                     </div>
                         <button class="category-button btn btn-success btn-sm">Add Expense</button>
@@ -143,7 +144,7 @@ const loadExpenseDOM = () => {
             categoryList.appendChild(expenseItem)
 
             categoryList.addEventListener('click', (e) => {
-                if (expenseCategoryInput.value !== ''){
+                if (expenseCategoryInput.value !== '' || addExpenseContainer.classList.contains('transition')){
                     toggleElementVisability(addExpenseContainer)
                     expenseCategoryInput.value = ''
                 }
@@ -174,7 +175,7 @@ const createDeleteButton = (index) => {
     deleteButton.textContent = 'Delete'
     
     // delete logic for button
-    deleteButton.addEventListener('click', () => {
+    deleteButton.addEventListener('click', (e) => {
         data.splice(index, 1)
         updateLocalStorage()
         generateDOM()
@@ -188,3 +189,25 @@ const toggleElementVisability = (eventElement) => {
         eventElement.classList.toggle('transition')
     }
 
+const activeExpenseButtonListeners = () => {
+    document.querySelectorAll('.category-button').forEach((categoryButton) => {
+        categoryButton.addEventListener('click', (e) => {
+            // Check if addExpenseContainer is visible and toggle, if not
+            if (expenseCategoryInput.value === '' && addExpenseContainer.classList.contains('hide')) {
+                toggleElementVisability(addExpenseContainer, addExpenseContainer)
+            }
+            //autocomplete expense category field with selected category
+            expenseCategoryInput.value = categoryButton.parentNode.querySelector('h5').textContent.toLowerCase()
+            e.stopPropagation()
+
+            // close open category lists when adding new expense
+            document.querySelectorAll('.expense-items').forEach((item) => {
+                if (!item.classList.contains('hide')) {
+                    toggleElementVisability(item)
+                }
+            })
+            expenseInput.focus()
+            expenseInput.scrollIntoView({ behavior: "smooth", block: "center" })
+        })
+    })
+}
