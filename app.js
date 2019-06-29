@@ -24,17 +24,27 @@ document.querySelector('#income-submit').addEventListener('click', () => {
 document.querySelector('#expense-submit').addEventListener('click', (e) => {
     updateData('expense', expenseInput.value, parseInt(expenseAmountInput.value), expenseCategoryInput.value.toLowerCase())
     generateDOM()
-    toggleElementVisability(addExpenseContainer, e)
+    toggleElementVisability(addExpenseContainer)
 })
 
-document.querySelectorAll('.category-button').forEach(function(categoryButton){
+document.querySelectorAll('.category-button').forEach((categoryButton) => {
     categoryButton.addEventListener('click', (e) => {
+        // Check if addExpenseContainer is visible and toggle, if not
         if (expenseCategoryInput.value === '' && addExpenseContainer.classList.contains('hide')) {
-            toggleElementVisability(addExpenseContainer)
+            toggleElementVisability(addExpenseContainer, addExpenseContainer)
         }
-        expenseInput.focus()
+        //autocomplete expense category field with selected category
         expenseCategoryInput.value = categoryButton.parentNode.querySelector('h5').textContent.toLowerCase()
         console.log(e.target)
         e.stopPropagation()
+
+        // close open category lists when adding new expense
+        document.querySelectorAll('.expense-items').forEach((item) => {
+            if (!item.classList.contains('hide')) {
+                toggleElementVisability(item)
+            }
+        })
+        expenseInput.focus()
+        expenseInput.scrollIntoView({ behavior: "smooth", block: "center" })
     })
 })

@@ -131,7 +131,7 @@ const loadExpenseDOM = () => {
         //iterate through each separate category list add expense elements
         list.forEach(function (item, index) {
             const expenseItem = document.createElement('li') 
-            expenseItem.setAttribute('class', 'list-group-item hide d-flex justify-content-between')
+            expenseItem.setAttribute('class', 'list-group-item hide d-flex justify-content-between expense-items')
             expenseItem.innerHTML = 
                                     `<div>
                                         <p class="h6 item-description">${item.description} </p> 
@@ -147,7 +147,8 @@ const loadExpenseDOM = () => {
                     toggleElementVisability(addExpenseContainer)
                     expenseCategoryInput.value = ''
                 }
-                toggleElementVisability(expenseItem, e)
+                toggleElementVisability(expenseItem)
+                expenseItem.scrollIntoView({ behavior: "smooth", block: "nearest" })
             })
         })
     })
@@ -185,6 +186,5 @@ const createDeleteButton = (index) => {
 const toggleElementVisability = (eventElement) => {
         eventElement.classList.toggle('hide')
         eventElement.classList.toggle('transition')
-        eventElement.scrollIntoView({behavior: "smooth", block: "nearest"})
     }
 

@@ -4,7 +4,7 @@
     position: absolute;
 }
 .transition {
-    transition: opacity 900ms ease-out
+    transition: opacity 500ms ease-in
 }
 .expense-header:hover {
     box-shadow: 0 0 8px rgba(0,123,255, 0.6);
