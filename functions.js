@@ -42,13 +42,11 @@ const updateData = (type, description, amount, category) => {
 
 const clearDOM = () => {
     //clear expense fields
-    expenseInput.value = ''
-    expenseAmountInput.value = ''
+    expenseForm.reset()
     expenseList.textContent = ''
 
     //category list with placeholder element
     expenseOptions.textContent = ''
-    expenseCategoryInput.value = ''
     // clear income fields
     incomeAmountInput.value = ''
     incomeInput.value = ''
@@ -99,13 +97,15 @@ const generateExpenseCategories = (data) => {
     })
 }
 
-const loadExpenseDOM = () => { 
+const loadExpenseDOM = () => {
+    //check if there are any expenses to load. if not, ensure the add expense is visible 
+    if (categoryArray.length === 0){
+        toggleElementVisability(addExpenseContainer)
+    }
     //iterate through category array to find objects with matching category property.
     categoryArray.forEach(function (item, index) {
-        
         //creates separate object arrays based on category array matching object.category
         const list = data.filter((data) => data.category !== undefined && data.category.indexOf(item) >= 0 && data.category.length === item.length)
-
         //setup each category and expense element
         const categoryList = document.createElement('div')
         categoryList.setAttribute('class', 'card my-3 shadow')
@@ -120,9 +120,9 @@ const loadExpenseDOM = () => {
         }
         
         categoryList.innerHTML = 
-                `<div class="card-header expense-header ${item} d-flex justify-content-between">
+                `<div class="card-header expense-header cat-${item} d-flex justify-content-between">
                     <div>
-                        <h5 id=${item}>${item.toUpperCase()}</h5>
+                        <h5 id=cat-item-${item}>${item.toUpperCase()}</h5>
                         <span class="text-secondary">Total Spent:</span>  $${categoryTotal()} 
                     </div>
                         <button class="category-button btn btn-success btn-sm">Add Expense</button>
@@ -143,7 +143,7 @@ const loadExpenseDOM = () => {
             categoryList.appendChild(expenseItem)
 
             // toggle visability of children elements when clicking on expenseHeader
-            const expenseHeader = document.querySelector(`.${item.category}`)
+            const expenseHeader = document.querySelector(`.cat-${item.category}`)
             expenseHeader.addEventListener('click', (e) => {
                 if (expenseCategoryInput.value !== '' || addExpenseContainer.classList.contains('transition')){
                     toggleElementVisability(addExpenseContainer)
@@ -179,7 +179,10 @@ const createDeleteButton = (index) => {
     deleteButton.addEventListener('click', (e) => {
         data.splice(index, 1)
         updateLocalStorage()
-        generateDOM()
+        deleteButton.parentNode.classList.add('fade-out')
+        setTimeout(() => {
+            generateDOM()
+        }, 600);
     })
     return deleteButton
 }

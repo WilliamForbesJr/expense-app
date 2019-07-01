@@ -36,12 +36,13 @@
             
             <div class="container">
                 <h2 class="display-3">Expenses</h2>
+                <form id="expense-form">
                 <div class="row add-expense-container hide">
                     <div class="col">
-                        <input id="expense-input" class="form-control" placeholder="Add Expense">
+                        <input id="expense-input" class="form-control" placeholder="Add Expense" required>
                     </div>
                     <div class="col">
-                        <input list="expense-category-list" id="expense-category-input" class ='form-control' placeholder="Expense Category">
+                        <input list="expense-category-list" id="expense-category-input" class ='form-control' placeholder="Expense Category" required>
                         <datalist id="expense-category-list">
                         </datalist>
                     </div>
@@ -49,9 +50,12 @@
                         <input id="expense-cost-input" class="form-control" type="number" placeholder="Add Cost" required>
                     </div>
                     <div class="col">
-                        <button id="expense-submit" class="btn btn-primary btn-block">Add Expense</button>
+                        <button id="expense-submit" class="btn btn-primary btn-block" type='submit'>Add Expense</button>
                     </div>
+                    </form>
                 </div>
+                                    
+
                 <div>
                     <ul id="expense-list" class="list-group">
                     </ul>
