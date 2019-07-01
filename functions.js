@@ -1,6 +1,6 @@
 //retreive data array from local storage
-const getData = () => {
-    const dataJSON = localStorage.getItem('data')
+const getData = (data) => {
+    const dataJSON = localStorage.getItem(data)
     if (dataJSON !== null) {
         return JSON.parse(dataJSON)
     } else {
@@ -9,13 +9,13 @@ const getData = () => {
 }
 
 // Update local storage
-const updateLocalStorage = () => {
-    localStorage.setItem('data', JSON.stringify(data))
+const updateLocalStorage = (key, value) => {
+    localStorage.setItem(key, JSON.stringify(value))
 }     
 
 const generateDOM = () => {
     clearDOM()
-    generateExpenseCategories(data)
+    generateExpenseCategories(expenseData)
     calculateTotals()
     loadIncomeDOM()
     loadExpenseDOM()
@@ -28,15 +28,19 @@ const updateData = (type, description, amount, category) => {
     if (isNaN(amount)) {
         amount = 0
     }
-    const newItem = {
-        type: type,
+    const newTransaction = {
         description: description,
         amount: amount,
+        category: category
+    }
+    if (type ==='expense'){
+        expenseData.push(newTransaction)
+        updateLocalStorage('expense', expenseData)
+    } else if (type === 'income') {
+        incomeData.push(newTransaction)
+        updateLocalStorage('income', incomeData)
     }
 
-    newItem.category = category
-    data.push(newItem)
-    updateLocalStorage()
     clearDOM()
 }
 
@@ -57,7 +61,7 @@ const calculateTotals = () => {
     let totalExpenses = 0
     let totalIncome = 0
     //iterate through data array and add each object type
-    data.forEach(function (item, index) {
+    expenseData.forEach(function (item, index) {
         if (item.type === 'income') {
             totalIncome += parseInt(item.amount)
         } else if (item.type === 'expense'){
@@ -105,7 +109,7 @@ const loadExpenseDOM = () => {
     //iterate through category array to find objects with matching category property.
     categoryArray.forEach(function (item, index) {
         //creates separate object arrays based on category array matching object.category
-        const list = data.filter((data) => data.category !== undefined && data.category.indexOf(item) >= 0 && data.category.length === item.length)
+        const list = expenseData.filter((data) => data.category !== undefined && data.category.indexOf(item) >= 0 && data.category.length === item.length)
         //setup each category and expense element
         const categoryList = document.createElement('div')
         categoryList.setAttribute('class', 'card my-3 shadow')
@@ -138,7 +142,7 @@ const loadExpenseDOM = () => {
                                         $${item.amount}
                                     </div>`
                                     
-            expenseItem.appendChild(createDeleteButton(index))
+            expenseItem.appendChild(createDeleteButton(index, expenseData, 'expense'))
             expenseList.appendChild(categoryList)
             categoryList.appendChild(expenseItem)
 
@@ -158,27 +162,25 @@ const loadExpenseDOM = () => {
 }
 
 const loadIncomeDOM = () => {
-    data.forEach(function (item, index) {
+    incomeData.forEach(function (item, index) {
         const incomeItem = document.createElement('li')
         incomeItem.setAttribute('class', 'list-group-item')
         //Sort data objects in DOM
-        if (item.type === 'income') {
             incomeItem.textContent = `Item:  ${item.description} Cost:  ${item.amount}`
-            incomeItem.appendChild(createDeleteButton(index))
+            incomeItem.appendChild(createDeleteButton(index, incomeData, 'income'))
             incomeList.appendChild(incomeItem)
-        }
     })
 }
 
-const createDeleteButton = (index) => {
+const createDeleteButton = (index, dataType, key) => {
     const deleteButton = document.createElement('button')
     deleteButton.setAttribute('class', 'delete-expense btn btn-danger btn-sm')
     deleteButton.textContent = 'Delete'
     
     // delete logic for button
     deleteButton.addEventListener('click', (e) => {
-        data.splice(index, 1)
-        updateLocalStorage()
+        dataType.splice(index, 1)
+        updateLocalStorage(key, dataType)
         deleteButton.parentNode.classList.add('fade-out')
         setTimeout(() => {
             generateDOM()
@@ -215,3 +217,8 @@ const activeExpenseButtonListeners = () => {
         })
     })
 }
+
+/* Category object:
+    Category: name
+    category: budget
+*/

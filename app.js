@@ -10,7 +10,8 @@ const incomeInput = document.querySelector('#income-input')
 const incomeAmountInput = document.querySelector('#income-amount-input')
 const incomeList = document.querySelector("#income-list")
 
-const data = getData()
+const expenseData = getData('expense')
+const incomeData = getData('income')
 const categoryArray = []
 
 generateDOM()
