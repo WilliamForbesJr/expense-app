@@ -1,7 +1,10 @@
 //retreive data array from local storage
 const getData = () => {
+    // JJ: Avoid using `localStorage`
     const dataJSON = localStorage.getItem('data')
     if (dataJSON !== null) {
+        // JJ: Conflicting return types. This line returns an Obj, while the `else` returns an Array.
+        // Always aim to keep a consistent return type from your fns
         return JSON.parse(dataJSON)
     } else {
         return []
@@ -33,6 +36,7 @@ const updateData = (type, description, amount, category) => {
         amount: amount,
     }
 
+    // JJ: Should be able to just define newItem's `category` attribute in the obj constructor above
     newItem.category = category
     data.push(newItem)
     updateLocalStorage()
@@ -54,6 +58,10 @@ const clearDOM = () => {
     incomeList.textContent = ''
 }
 
+// JJ: You have too much going on in this function that `calculateTotals` doesn't truly define all
+// does. Try breaking down your functions by thinking of them in the Single Responsibility Principle.
+// This function should just worry about calculating the totals. Manipulating the DOM with the values
+// returned by this method should be handled by a separate method.
 const calculateTotals = () => {
     let totalExpenses = 0
     let totalIncome = 0
